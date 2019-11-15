@@ -40,18 +40,13 @@ router.get('/', async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   const response = await axios.post(infuraEndpoint, smartWalletPayload)
 
-  res.write(JSON.stringify({result: parseInt(response.data.result.slice(56, 66), 16)}));
-  res.end();
-
-  /*
   res.write(JSON.stringify({
     schemaVersion: 1,
-    label: "Smart Wallet version",
+    label: "Smart Wallet version",   
     message: parseInt(response.data.result.slice(56, 66), 16),
     color: "blue"
   }));
   res.end();
-  */
 });
 
 router.get('/smart-wallet-version', async (req, res) => {
@@ -59,9 +54,9 @@ router.get('/smart-wallet-version', async (req, res) => {
   const response = await axios.post(infuraEndpoint, smartWalletPayload)
   res.write(JSON.stringify({
     schemaVersion: 1,
-    label: "Key Ring version",
+    label: "Smart Wallet version",   
     message: parseInt(response.data.result.slice(56, 66), 16),
-    color: "orange"
+    color: "blue"
   }));
   res.end();
 });
