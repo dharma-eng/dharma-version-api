@@ -1,8 +1,8 @@
 const express = require('express')
 const axios = require('axios')
 const jq = require('node-jq')
+const serverless = require('serverless-http');
 
-const port = process.env.PORT || 8080
 const infuraAPIKey = process.env.INFURA_API_KEY
 const infuraEndpoint = 'https://mainnet.infura.io/v3/' + infuraAPIKey
 const smartWalletPayload = {
@@ -54,6 +54,4 @@ app.get('/key-ring-version', async (req, res) => {
   return res.send(transform)
 })
 
-app.listen(port, () =>
-  console.log(`Listening on port ${port}`)
-)
+module.exports.handler = serverless(app);
