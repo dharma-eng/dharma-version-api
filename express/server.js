@@ -39,6 +39,11 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   const response = await axios.post(infuraEndpoint, smartWalletPayload)
+
+  res.write(response.data);
+  res.end();
+
+  /*
   res.write(JSON.stringify({
     schemaVersion: 1,
     label: "Smart Wallet version",
@@ -46,6 +51,7 @@ router.get('/', async (req, res) => {
     color: "blue"
   }));
   res.end();
+  */
 });
 
 router.get('/smart-wallet-version', async (req, res) => {
