@@ -38,14 +38,26 @@ const keyRingPayload = {
 const router = express.Router();
 router.get('/', async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  const response = await axios.post(infuraEndpoint, smartWalletPayload)
 
-  res.write(JSON.stringify({
-    schemaVersion: 1,
-    label: "Smart Wallet version",   
-    message: parseInt(response.data.result.slice(56, 66), 16),
-    color: "blue"
-  }));
+  let response;
+  if (req.query.color1 !== 'keyring') {
+    response = await axios.post(infuraEndpoint, smartWalletPayload);
+
+    res.write(JSON.stringify({
+      schemaVersion: 1,
+      label: "Smart Wallet version",   
+      message: parseInt(response.data.result.slice(56, 66), 16),
+      color: "blue"
+    }));
+  } else {
+    response = await axios.post(infuraEndpoint, keyRingPayload)
+    res.write(JSON.stringify({
+      schemaVersion: 1,
+      label: "Key Ring version",
+      message: parseInt(response.data.result.slice(56, 66), 16),
+      color: "orange"
+    })); 
+  }
   res.end();
 });
 
