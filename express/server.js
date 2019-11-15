@@ -5,7 +5,6 @@ const serverless = require('serverless-http');
 const app = express();
 const bodyParser = require('body-parser');
 const axios = require('axios');
-const jq = require('node-jq');
 
 const infuraAPIKey = process.env.INFURA_API_KEY;
 const infuraEndpoint = 'https://mainnet.infura.io/v3/' + infuraAPIKey;
@@ -35,37 +34,41 @@ const keyRingPayload = {
   ],
   "id": 1
 };
-const smartWalletFilter = (
-  '.result[56:66] | tonumber | ' +
-  '{schemaVersion: 1, label: "Smart Wallet version", message: ., color: "blue"}'
-)
-const keyRingFilter = (
-  '.result[56:66] | tonumber | ' +
-  '{schemaVersion: 1, label: "Key Ring version", message: ., color: "orange"}'
-);
 
 const router = express.Router();
 router.get('/', async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   const response = await axios.post(infuraEndpoint, smartWalletPayload)
-  const transform = await jq.run(smartWalletFilter, response.data, {input: 'json'})
-  res.write(transform);
+  res.write(  {
+    schemaVersion: 1,
+    label: "Smart Wallet version",
+    message: parseInt(response.data.response.slice(56, 66), 16),
+    color: "blue"
+  });
   res.end();
 });
 
 router.get('/smart-wallet-version', async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   const response = await axios.post(infuraEndpoint, smartWalletPayload)
-  const transform = await jq.run(smartWalletFilter, response.data, {input: 'json'})
-  res.write(transform);
+  res.write(  {
+    schemaVersion: 1,
+    label: "Key Ring version",
+    message: parseInt(response.data.response.slice(56, 66), 16),
+    color: "orange"
+  });
   res.end();
 });
 
 router.get('/key-ring-version', async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   const response = await axios.post(infuraEndpoint, keyRingPayload)
-  const transform = await jq.run(keyRingFilter, response.data, {input: 'json'})
-  res.write(transform);
+  res.write(  {
+    schemaVersion: 1,
+    label: "Key Ring version",
+    message: parseInt(response.data.response.slice(56, 66), 16),
+    color: "orange"
+  });
   res.end();
 });
 
