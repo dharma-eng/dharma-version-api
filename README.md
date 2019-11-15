@@ -6,5 +6,11 @@ INFURA_API_KEY=<api-key> node index.js
 ```
 
 Exposes:
-- `/smart-wallet-version`
-- `/key-ring-version`
+- https://dharma-version-api.netlify.com/.netlify/functions/server?target=smartwallet
+- https://dharma-version-api.netlify.com/.netlify/functions/server?target=keyring
+
+Returns:
+
+```
+{"schemaVersion":1,"label":"Smart Wallet version","message":3,"color":"blue"}
+```
