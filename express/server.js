@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
   res.writeHead(200, { 'Content-Type': 'application/json' });
   const response = await axios.post(infuraEndpoint, smartWalletPayload)
 
-  res.write(JSON.stringify(response.data));
+  res.write(JSON.stringify({result: response.data.result}));
   res.end();
 
   /*
