@@ -46,7 +46,7 @@ router.get('/', async (req, res) => {
     res.write(JSON.stringify({
       schemaVersion: 1,
       label: "Smart Wallet version",   
-      message: parseInt(response.data.result.slice(56, 66), 16),
+      message: parseInt(response.data.result.slice(56, 66), 16).toString(10),
       color: "blue"
     }));
   } else {
@@ -54,7 +54,7 @@ router.get('/', async (req, res) => {
     res.write(JSON.stringify({
       schemaVersion: 1,
       label: "Key Ring version",
-      message: parseInt(response.data.result.slice(56, 66), 16),
+      message: parseInt(response.data.result.slice(56, 66), 16).toString(10),
       color: "orange"
     })); 
   }

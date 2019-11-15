@@ -12,5 +12,5 @@ Exposes:
 Returns:
 
 ```
-{"schemaVersion":1,"label":"Smart Wallet version","message":3,"color":"blue"}
+{"schemaVersion":1,"label":"Smart Wallet version","message":"3","color":"blue"}
 ```
